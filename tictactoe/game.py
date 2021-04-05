@@ -5,9 +5,10 @@ class Game:
 
     def __init__(self, board):
 
-        if board == 'new':
-            self.board = self.new_board()
-        else:
+        if isinstance(board, str):
+            if board == 'new':
+                self.board = self.new_board()
+        elif isinstance(board, np.ndarray):
             self.board = board # np array
 
         self.flattened = self.board.flatten()
@@ -45,6 +46,10 @@ class Game:
             self.winner = -1
             self.status = 1
 
+        elif len(np.where(self.flattened == 0)[0]) == 0:
+            self.winner = 0
+            self.status = 1
+
         else:
             # print('Game incomplete')
             self.winner = 0
@@ -66,11 +71,11 @@ class Game:
 
 
     def player_routine(self, player, move='random'):
-        if move=='random':
-            move = self.choose_move()
 
         self.evaulate_board()
         if (self.status is None) or (self.status == 0):
+            if move=='random':
+                move = self.choose_move()
             self.make_move(player, move)
             self.evaulate_board()
 

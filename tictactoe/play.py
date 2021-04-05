@@ -1,5 +1,5 @@
 from game import Game
-
+import numpy as np
 
 xPlayer = 1
 oPlayer = -1
@@ -13,3 +13,4 @@ while game.status == 0:
 
     game.player_routine(oPlayer)
     game.print_board()
+    # game.flattened()

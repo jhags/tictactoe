@@ -87,6 +87,17 @@ def test_evaluate_board():
     assert game.status == 1
     assert game.winner == -1
 
+    board = np.array([
+        [1, -1, 1],
+        [1, 1, -1],
+        [-1, 1, -1]
+    ])
+
+    game = Game(board)
+    game.evaulate_board()
+    assert game.status == 1
+    assert game.winner == 0
+
 
     def test_make_move():
         board = np.array([

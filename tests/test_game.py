@@ -30,7 +30,7 @@ def test_evaluate_board():
     game = Game(board)
     game.evaulate_board()
     assert game.status == 1
-    assert game.winner == 1
+    assert game.winner == 'O'
 
     board = np.array([
         [1, 1, 1],
@@ -41,7 +41,7 @@ def test_evaluate_board():
     game = Game(board)
     game.evaulate_board()
     assert game.status == 1
-    assert game.winner == 1
+    assert game.winner == 'O'
 
     board = np.array([
         [1, 0, 0],
@@ -52,7 +52,7 @@ def test_evaluate_board():
     game = Game(board)
     game.evaulate_board()
     assert game.status == 1
-    assert game.winner == 1
+    assert game.winner == 'O'
 
     board = np.array([
         [0, 0, 1],
@@ -63,7 +63,7 @@ def test_evaluate_board():
     game = Game(board)
     game.evaulate_board()
     assert game.status == 1
-    assert game.winner == 1
+    assert game.winner == 'O'
 
     board = np.array([
         [1, 0, 1],
@@ -74,7 +74,7 @@ def test_evaluate_board():
     game = Game(board)
     game.evaulate_board()
     assert game.status == 0
-    assert game.winner == 0
+    assert game.winner == None
 
     board = np.array([
         [-1, 0, 0],
@@ -85,7 +85,7 @@ def test_evaluate_board():
     game = Game(board)
     game.evaulate_board()
     assert game.status == 1
-    assert game.winner == -1
+    assert game.winner == 'X'
 
     board = np.array([
         [1, -1, 1],
@@ -96,7 +96,7 @@ def test_evaluate_board():
     game = Game(board)
     game.evaulate_board()
     assert game.status == 1
-    assert game.winner == 0
+    assert game.winner == 'D'
 
 
     def test_make_move():
@@ -113,4 +113,4 @@ def test_evaluate_board():
         ])
         game = Game(board)
         game.make_move(move=0)
-        np.testing.assert_array_equal(expected_board, game.board)
+        assert np.testing.assert_array_equal(expected_board, game.board)

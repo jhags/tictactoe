@@ -55,10 +55,10 @@ def plot_accuracy_graphs(history, epochs):
 
     return plt.show()
 
+training_iteration = 5
 
-nr_games = 100000
 train_valid_split_ratio = 0.2
-data = pd.read_pickle(root + r'/data/game_data_{0}.pkl'.format(nr_games))
+data = pd.read_pickle(root + r'/data/data_{0}.pkl'.format(str(training_iteration)))
 
 outputmap = {'X': 0, 'O': 1, 'D':2}
 data['winner'] = data['winner'].map(outputmap)
@@ -90,8 +90,8 @@ model.compile(optimizer="rmsprop", loss="categorical_crossentropy", metrics=['ac
 
 model.summary()
 
-batch = 20000
-epochs = 100
+batch = 50
+epochs = 40
 # Fit the model
 history = model.fit(
     x_train, y_train,
@@ -103,4 +103,4 @@ history = model.fit(
 
 plot_accuracy_graphs(history, epochs)
 
-model.save('trainedmodel.h5')
+model.save('model_%s.h5' %(str(training_iteration)))

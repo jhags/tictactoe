@@ -10,7 +10,7 @@ sys.path.append(root)
 
 from tictactoe.game import Game
 
-nr_games = 100000
+nr_games = 100
 
 history = []
 win_log = []

@@ -1,8 +1,11 @@
 ''' Types of Players Class '''
 
-import numpy as np
+# from keras.utils import np_utils
+import json
 import random
-from keras.utils import np_utils
+
+import numpy as np
+
 
 class Player:
 
@@ -39,9 +42,12 @@ class HumanPlayer:
 
 class BotPlayer:
 
-    def __init__(self, model, random_move_threshold=None):
-        self.model = model
-        self.rand_threshold = random_move_threshold
+    def __init__(self, model=None, greedy_epsilon=None):
+        if model is None:
+            self.model = {}
+        else:
+            self.model = model
+        self.rand_threshold = greedy_epsilon
         self.random_move = False
 
     def name(self):
@@ -59,11 +65,44 @@ class BotPlayer:
             self.make_random_move()
 
         if self.random_move is False:
-            predict_moves = self.model.predict(np.array([board]))
-            moves = predict_moves[0][available_moves]
-            idx = np.argmax(moves)
-            move = available_moves[idx]
+            # predict_moves = self.model.predict(np.array([board]))
+            # moves = predict_moves[0][available_moves]
+            # idx = np.argmax(moves)
+            # move = available_moves[idx]
+
+            hashBoard = ''.join(list(board.astype(str)))
+            if hashBoard in self.model:
+                actions = self.model[hashBoard]
+            else:
+                return np.random.choice(available_moves)
+
+            ordered_moves = list(reversed(np.argsort(actions)))
+            for move in ordered_moves:
+                if move in available_moves:
+                    break
             return int(move)
 
         elif self.random_move is True:
             return np.random.choice(available_moves)
+
+
+    def update_model(self, game, reward, learningRate, discount):
+        Qval = reward
+        for move in reversed(game.gameHistory):
+            if move[2].value==game.player1.value:
+                cell = move[3]
+                hashBoard = ''.join(list(move[1].astype(str)))
+                if hashBoard in self.model:
+                    actions = self.model[hashBoard]
+                else:
+                    actions = np.zeros(9)
+
+                Qval = ((Qval * discount) - actions[cell])
+                actions[cell] = Qval * learningRate
+
+                self.model[hashBoard] = actions
+
+    def save_model(self, filepath):
+        for k, v in self.model.items():
+            self.model[k] = list(v)
+        json.dump(self.model, open(filepath, 'w'))

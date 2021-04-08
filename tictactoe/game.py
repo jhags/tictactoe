@@ -7,8 +7,9 @@ class Game:
 
     def __init__(self, player1, player2, player1_to_move=True, board=None):
 
-        self.player1 = Player(player1, 1, 'X', -1)
-        self.player2 = Player(player2, 2, 'O', 1)
+        self.player1 = Player(player1, 1, 'X', 1)
+        self.player2 = Player(player2, 2, 'O', 2)
+        self.draw = Player(None, 0, None, 0)
 
         if player1_to_move:
             self.currPlayer = self.player1
@@ -28,9 +29,6 @@ class Game:
         self.moveCounter = 0
         self.evaulate_board()
 
-    def __repr__(self):
-        return pprint.pprint(self.print_board())
-
 
     def new_board(self):
         new_board = np.array([
@@ -43,7 +41,11 @@ class Game:
 
     def evaulate_board(self):
 
-        arrBoard = self.board.reshape(3, 3)
+        arrBoard = self.board.copy() # make a copy
+        arrBoard = np.where(arrBoard==self.player1.value, -1, arrBoard) # Replace P1 with -1
+        arrBoard = np.where(arrBoard==self.player2.value, 1, arrBoard) # Replace P2 with 1
+
+        arrBoard = arrBoard.reshape(3, 3)
         rows = list(arrBoard.sum(axis=1))
         cols = list(arrBoard.sum(axis=0))
         diags_1 = arrBoard.trace()
@@ -60,7 +62,7 @@ class Game:
             self.status = 1
 
         elif len(np.where(self.board == 0)[0]) == 0: # Draw
-            self.winner = 0
+            self.winner = self.draw
             self.status = 1
 
         else: # Game in progress
@@ -131,7 +133,10 @@ class Game:
          {6} | {7} | {8}    6   7   8
         '''
 
-        markerMap = {-1: 'X', 1: 'O', 0: ' '}
+        markerMap = {
+            self.player1.value: self.player1.token,
+            self.player2.value: self.player2.token,
+            0: ' '}
 
         strBoard = [markerMap[x] for x in self.board]
 
@@ -148,7 +153,7 @@ class Game:
 
     def print_evaluationmessage(self):
 
-        if self.winner==0:
+        if self.winner.value==0:
             print('Draw!\n=== GAME OVER ===')
 
         else:

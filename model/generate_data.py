@@ -4,14 +4,14 @@ import sys
 
 import pandas as pd
 import numpy as np
-from keras.models import load_model
+# from keras.models import load_model
 
 root = os.path.abspath(os.path.join(__file__, "../.."))
 sys.path.append(root)
 
 from tictactoe import BotPlayer, Game, HumanPlayer, RandomPlayer
 
-model = load_model(root + r'/model/model.h5')
+# model = load_model(root + r'/model/model.h5')
 
 lineup = [
     (RandomPlayer(), RandomPlayer()),
@@ -23,7 +23,9 @@ lineup = [
     # (BotPlayer(model, random_move_threshold=0.25), BotPlayer(model)),
 ]
 
-games = 100000
+games = 10
+
+qTable = np.zeros(9)
 
 log = []
 winlog = []
@@ -88,12 +90,15 @@ data['currPlayer_win'] = data.apply(lambda x: True if (x['currPlayer']==x['winne
 match_moves = data.groupby(by=['match'])['move_nr'].max().to_frame('total_moves').reset_index()
 data = pd.merge(data, match_moves, on='match')
 
-data['strBoard'] = data['board'].apply(lambda x: ''.join(x.astype(str)))
-
 data['persBoard'] = data.apply(lambda x: x['currPlayer'].value * x['board'], axis=1)
-data['strPersBoard'] = data['persBoard'].apply(lambda x: ''.join(x.astype(str)))
-
 data = data[data['currPlayer_win']==True]
+
+data[(data['move_nr']==9)]['selected_move'].value_counts()
+
+# data['strBoard'] = data['board'].apply(lambda x: ''.join(x.astype(str)))
+
+# data['strPersBoard'] = data['persBoard'].apply(lambda x: ''.join(x.astype(str)))
+
 
 # Training data
 mask_moves = data['total_moves']<=8

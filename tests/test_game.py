@@ -27,7 +27,7 @@ def test_evaluate_board():
         [1, 0, 0]
     ])
 
-    game = Game(board)
+    game = Game(1, 2, board)
     game.evaulate_board()
     assert game.status == 1
     assert game.winner == 'O'

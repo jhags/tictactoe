@@ -6,17 +6,14 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from keras.layers import Dense
+from keras.layers import Dense, Flatten
 from keras.models import Sequential
 from keras.utils import np_utils
 
 from sklearn.model_selection import train_test_split
 
-
 root = os.path.abspath(os.path.join(__file__, "../.."))
 sys.path.append(root)
-
-from tictactoe.game import Game
 
 
 def plot_accuracy_graphs(history, epochs):
@@ -55,17 +52,12 @@ def plot_accuracy_graphs(history, epochs):
 
     return plt.show()
 
-training_iteration = 5
 
 train_valid_split_ratio = 0.2
-data = pd.read_pickle(root + r'/data/data_{0}.pkl'.format(str(training_iteration)))
+data = pd.read_pickle(root + r'/data/traindata_randP1.pkl.gzip', compression='gzip')
 
-outputmap = {'X': 0, 'O': 1, 'D':2}
-data['winner'] = data['winner'].map(outputmap)
-data = data[data['winner'].isin([0, 1])]
-
-x = np.array(list(data['board'].copy()))
-y = np.array(data['winner'].copy())
+x = np.array(list(data['persBoard'].copy()))
+y = np.array(data['selected_move'].copy())
 
 x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=train_valid_split_ratio, random_state=0)
 
@@ -79,19 +71,19 @@ y_valid = np_utils.to_categorical(y_valid, nr_classes)
 # Construct model
 model = Sequential()
 
-model.add(Dense(9, input_shape=x_train.shape[1:], activation="relu"))
+model.add(Dense(27, input_shape=x_train.shape[1:], activation="relu"))
+# model.add(Dense(18, activation="relu"))
+model.add(Dense(27, activation="relu"))
 model.add(Dense(18, activation="relu"))
-model.add(Dense(9, activation="relu"))
-model.add(Dense(4, activation="relu"))
-model.add(Dense(nr_classes, activation="sigmoid"))
+model.add(Dense(nr_classes, activation="softmax"))
 
 # compile the model
 model.compile(optimizer="rmsprop", loss="categorical_crossentropy", metrics=['accuracy'])
 
 model.summary()
 
-batch = 50
-epochs = 40
+batch = 100
+epochs = 30
 # Fit the model
 history = model.fit(
     x_train, y_train,
@@ -103,4 +95,4 @@ history = model.fit(
 
 plot_accuracy_graphs(history, epochs)
 
-model.save('model_%s.h5' %(str(training_iteration)))
+model.save('model_bot_randP1.h5')

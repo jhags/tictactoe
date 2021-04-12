@@ -7,6 +7,22 @@
     </script>
 </head>
 
+<body onload="brython()">
+
+<script type="text/python">
+
+from browser import document
+
+document <= "Hello There!"
+
+mylist = [1, 2, 3]
+
+strList = [str(x) for x in mylist]
+
+document <= ' -- '.join(strList)
+
+</script>
 
 
+</body>
 </html>

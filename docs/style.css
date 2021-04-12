@@ -37,4 +37,5 @@ section {
     transition: border-color 250ms ease;
     color: #21243d;
     font-weight: 700;
+    cursor: pointer;
   }

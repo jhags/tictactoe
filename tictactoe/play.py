@@ -13,16 +13,16 @@ sys.path.append(root)
 
 from tictactoe import BotPlayer, Game, HumanPlayer, RandomPlayer
 
-P1model = json.load(open(root + r'/data/RLmodel_P1.json'))
+P1model = json.load(open(root + r'/model/RLmodel_P1.json'))
 for k, v in P1model.items():
     P1model[k] = np.array(v)
 
-P2model = json.load(open(root + r'/data/RLmodel_P2.json'))
+P2model = json.load(open(root + r'/model/RLmodel_P2.json'))
 for k, v in P2model.items():
     P2model[k] = np.array(v)
 
 lineup = [
-    (HumanPlayer(), BotPlayer(model=P2model)),
+#     (HumanPlayer(), BotPlayer(model=P2model)),
     (BotPlayer(model=P1model), HumanPlayer())
 ]
 

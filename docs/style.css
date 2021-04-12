@@ -24,3 +24,17 @@ section {
     line-height: 100px;
     font-size: 60px;
 }
+
+.game--restart {
+    margin-right: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-style: solid;
+    border-width: 0.125rem;
+    border-color: #88e1f2;
+    border-radius: 1rem;
+    background-color: transparent;
+    -webkit-transition: border-color 250ms ease;
+    transition: border-color 250ms ease;
+    color: #21243d;
+    font-weight: 700;
+  }

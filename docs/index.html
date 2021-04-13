@@ -16,7 +16,7 @@
         <div class="container">
             <div class="grid-1-1">
                 <div id="w-node-e8b55760-ef32-01d7-4e35-fe9276e83341-5cb6bb34" class="game-info">
-                    <h2 class="heading">Noughts &amp;Crosses</h2>
+                    <h2 class="heading">Noughts & Crosses</h2>
                     <p class="paragraph">
                         A game of noughts and crosses powered by machine learning.<br/>
                         <br/>
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="game">
-                        <span id="C0" data-cell="0" class="cell _0"></span>
+                        <div id="C0" data-cell="0" class="cell _0"></div>
                         <div id="C1" data-cell="1" class="cell _1"></div>
                         <div id="C2" data-cell="2" class="cell _2"></div>
                         <div id="C3" data-cell="3" class="cell _3"></div>
@@ -77,9 +77,6 @@
                         <div class="h-line _2"></div>
                         <div class="h-line _1"></div>
                         <div class="v-line _1"></div>
-                        <div id="game-win-1" data-w-id="49d61faa-5cec-4d2a-9150-e6f75f0a90d2" class="finish-trigger"></div>
-                        <div id="game-win-2" data-w-id="8ecb4e84-f09c-2b4d-8423-cb590e40b016" class="finish-trigger"></div>
-                        <div id="game-draw" data-w-id="8ca80c9e-91a0-9e8d-4a2c-c35950509799" class="finish-trigger"></div>
                     </div>
                 </div>
             </div>
@@ -134,7 +131,7 @@
 
     def marker_cell3(event):
         document["C3"].textContent = currPlayer
-        changePlayer(currPlayer, nextPlayer)
+        playGame()
         document["C3"].unbind("click", marker_cell3)
 
     def marker_cell4(event):

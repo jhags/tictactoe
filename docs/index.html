@@ -1,209 +1,281 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <script type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/brython@3.9.0/brython.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.0/brython.min.js"></script>
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Noughts and Crosses</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body onload="brython()">
-    <section>
-        <h1 class="heading">Noughts and Crosses</h1>
-        <div class="game--container">
-            <span id="C0" class="cell"></span>
-            <span id="C1" class="cell"></span>
-            <span id="C2" class="cell"></span>
-            <span id="C3" class="cell"></span>
-            <span id="C4" class="cell"></span>
-            <span id="C5" class="cell"></span>
-            <span id="C6" class="cell"></span>
-            <span id="C7" class="cell"></span>
-            <span id="C8" class="cell"></span>
+    <div class="tic-tac-toe">
+        <div class="container">
+            <div class="grid-1-1">
+                <div id="w-node-e8b55760-ef32-01d7-4e35-fe9276e83341-5cb6bb34" class="game-info">
+                    <h2 class="heading">Noughts &amp;Crosses</h2>
+                    <p class="paragraph">
+                        A game of noughts and crosses powered by machine learning.<br/>
+                        <br/>
+                    </p>
+                    <p id="game-status" class="gamestatus"></p>
+                    <div class="buttons-wrap">
+                        <a id="btnNewGame" data-w-id="ba3b2f03-2aef-875f-8af7-e6fdd940a1f1" href="#" class="button w-button">Start New Game</a>
+                    </div>
+                </div>
+                <div id="w-node-_09c0881c-d6b5-ccd2-1235-c168fc3bda72-5cb6bb34" class="game-wrap">
+                    <div class="player-info">
+                        <div id="player-x" class="player-block">
+                            <div class="w-form">
+                                <form id="email-form" name="email-form" data-name="Email Form">
+                                    <label for="name">Player X</label>
+                                    <select id="PlayerX-agent" name="field" class="playerdropdown w-select">
+                                        <option value="">Human</option>
+                                        <option value="">Bot</option>
+                                    </select>
+                                </form>
+                                <div class="w-form-done">
+                                    <div>Thank you! Your submission has been received!</div>
+                                </div>
+                                <div class="w-form-fail">
+                                    <div>Oops! Something went wrong while submitting the form.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="player-o" class="player-block">
+                            <div class="w-form">
+                                <form id="email-form" name="email-form" data-name="Email Form">
+                                    <label for="name">Player O</label>
+                                    <select id="PlayerO-agent" name="field" class="playerdropdown w-select">
+                                        <option value="">Bot</option>
+                                        <option value="">Human</option>
+                                    </select>
+                                </form>
+                                <div class="w-form-done">
+                                    <div>Thank you! Your submission has been received!</div>
+                                </div>
+                                <div class="w-form-fail">
+                                    <div>Oops! Something went wrong while submitting the form.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game">
+                        <span id="C0" data-cell="0" class="cell _0"></span>
+                        <div id="C1" data-cell="1" class="cell _1"></div>
+                        <div id="C2" data-cell="2" class="cell _2"></div>
+                        <div id="C3" data-cell="3" class="cell _3"></div>
+                        <div id="C4" data-cell="4" class="cell _4"></div>
+                        <div id="C5" data-cell="5" class="cell _5"></div>
+                        <div id="C6" data-cell="6" class="cell _6"></div>
+                        <div id="C7" data-cell="8" class="cell _7"></div>
+                        <div id="C8" data-cell="8" class="cell _8"></div>
+                        <div class="v-line _2"></div>
+                        <div class="h-line _2"></div>
+                        <div class="h-line _1"></div>
+                        <div class="v-line _1"></div>
+                        <div id="game-win-1" data-w-id="49d61faa-5cec-4d2a-9150-e6f75f0a90d2" class="finish-trigger"></div>
+                        <div id="game-win-2" data-w-id="8ecb4e84-f09c-2b4d-8423-cb590e40b016" class="finish-trigger"></div>
+                        <div id="game-draw" data-w-id="8ca80c9e-91a0-9e8d-4a2c-c35950509799" class="finish-trigger"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <h2 id="game-status" class="game-status"></h2>
-        <button id="btnNewGame" class="new-game">Start new game</button>
-    </section>
-<script type="text/python">
+    </div>
 
-from browser import document, window, alert
+    <script type="text/python">
 
-global currPlayer
-global nextPlayer
-global winningPlays
+    from browser import document, window, alert
 
-currPlayer = "X"
-nextPlayer = "O"
+    global currPlayer, nextPlayer, currAgent, nextAgent, xAgent, oAgent, winningPlays
 
-gameStatus = 0
+    xAgent = document["PlayerX-agent"]
+    xAgent = xAgent.options[xAgent.selectedIndex].value
 
-winningPlays = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-]
-
-
-def marker_cell0(event):
-    document["C0"].textContent = currPlayer
-    playGame()
-    document["C0"].unbind("click", marker_cell0)
-
-def marker_cell1(event):
-    document["C1"].textContent = currPlayer
-    playGame()
-    document["C1"].unbind("click", marker_cell1)
-
-def marker_cell2(event):
-    document["C2"].textContent = currPlayer
-    playGame()
-    document["C2"].unbind("click", marker_cell2)
-
-def marker_cell3(event):
-    document["C3"].textContent = currPlayer
-    changePlayer(currPlayer, nextPlayer)
-    document["C3"].unbind("click", marker_cell3)
-
-def marker_cell4(event):
-    document["C4"].textContent = currPlayer
-    playGame()
-    document["C4"].unbind("click", marker_cell4)
-
-def marker_cell5(event):
-    document["C5"].textContent = currPlayer
-    playGame()
-    document["C5"].unbind("click", marker_cell5)
-
-def marker_cell6(event):
-    document["C6"].textContent = currPlayer
-    playGame()
-    document["C6"].unbind("click", marker_cell6)
-
-def marker_cell7(event):
-    document["C7"].textContent = currPlayer
-    playGame()
-    document["C7"].unbind("click", marker_cell7)
-
-def marker_cell8(event):
-    document["C8"].textContent = currPlayer
-    playGame()
-    document["C8"].unbind("click", marker_cell8)
-
-def getBoard():
-    board = [
-        document["C0"].textContent,
-        document["C1"].textContent,
-        document["C2"].textContent,
-        document["C3"].textContent,
-        document["C4"].textContent,
-        document["C5"].textContent,
-        document["C6"].textContent,
-        document["C7"].textContent,
-        document["C8"].textContent
-    ]
-    return board
-
-def getValueBoard(board):
-    lt = []
-    for i in board:
-        if i=="X":
-            lt.append(1)
-        elif i=="O":
-            lt.append(2)
-        else:
-            lt.append(0)
-    valBoard = [str(x) for x in lt]
-    valBoard = ''.join(valBoard)
-    return valBoard
-
-def checkWinner(board, winningCombos):
-    Xwin = ["X", "X", "X"]
-    Owin = ["O", "O", "O"]
-    for combination in winningCombos:
-        checkWin = [board[i] for i in combination]
-        if checkWin==Xwin:
-            winner = "X"
-            break
-        elif checkWin==Owin:
-            winner = "O"
-            break
-        else:
-            winner = 0
-    return winner
-
-def changePlayer(current, next):
-    global currPlayer
-    global nextPlayer
-
-    temp = current
-    current = next
-    next = temp
-
-    currPlayer = current
-    nextPlayer = next
-
-def unbindAll():
-    document["C0"].unbind("click", marker_cell0)
-    document["C1"].unbind("click", marker_cell1)
-    document["C2"].unbind("click", marker_cell2)
-    document["C3"].unbind("click", marker_cell3)
-    document["C4"].unbind("click", marker_cell4)
-    document["C5"].unbind("click", marker_cell5)
-    document["C6"].unbind("click", marker_cell6)
-    document["C7"].unbind("click", marker_cell7)
-    document["C8"].unbind("click", marker_cell8)
-
-def newGame(event):
-    global currPlayer
-    global nextPlayer
+    oAgent = document["PlayerO-agent"]
+    oAgent = oAgent.options[oAgent.selectedIndex].value
 
     currPlayer = "X"
     nextPlayer = "O"
-    document["C0"].textContent = ""
-    document["C1"].textContent = ""
-    document["C2"].textContent = ""
-    document["C3"].textContent = ""
-    document["C4"].textContent = ""
-    document["C5"].textContent = ""
-    document["C6"].textContent = ""
-    document["C7"].textContent = ""
-    document["C8"].textContent = ""
-    document["game-status"].textContent = ""
+    currAgent = xAgent
+    nextAgent = oAgent
+
+    gameStatus = 0
+
+    winningPlays = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ]
+
+
+    def marker_cell0(event):
+        document["C0"].textContent = currPlayer
+        playGame()
+        document["C0"].unbind("click", marker_cell0)
+
+    def marker_cell1(event):
+        document["C1"].textContent = currPlayer
+        playGame()
+        document["C1"].unbind("click", marker_cell1)
+
+    def marker_cell2(event):
+        document["C2"].textContent = currPlayer
+        playGame()
+        document["C2"].unbind("click", marker_cell2)
+
+    def marker_cell3(event):
+        document["C3"].textContent = currPlayer
+        changePlayer(currPlayer, nextPlayer)
+        document["C3"].unbind("click", marker_cell3)
+
+    def marker_cell4(event):
+        document["C4"].textContent = currPlayer
+        playGame()
+        document["C4"].unbind("click", marker_cell4)
+
+    def marker_cell5(event):
+        document["C5"].textContent = currPlayer
+        playGame()
+        document["C5"].unbind("click", marker_cell5)
+
+    def marker_cell6(event):
+        document["C6"].textContent = currPlayer
+        playGame()
+        document["C6"].unbind("click", marker_cell6)
+
+    def marker_cell7(event):
+        document["C7"].textContent = currPlayer
+        playGame()
+        document["C7"].unbind("click", marker_cell7)
+
+    def marker_cell8(event):
+        document["C8"].textContent = currPlayer
+        playGame()
+        document["C8"].unbind("click", marker_cell8)
+
+    def getBoard():
+        board = [
+            document["C0"].textContent,
+            document["C1"].textContent,
+            document["C2"].textContent,
+            document["C3"].textContent,
+            document["C4"].textContent,
+            document["C5"].textContent,
+            document["C6"].textContent,
+            document["C7"].textContent,
+            document["C8"].textContent
+        ]
+        return board
+
+    def getValueBoard(board):
+        lt = []
+        for i in board:
+            if i=="X":
+                lt.append(1)
+            elif i=="O":
+                lt.append(2)
+            else:
+                lt.append(0)
+        valBoard = [str(x) for x in lt]
+        valBoard = ''.join(valBoard)
+        return valBoard
+
+    def checkWinner(board, winningCombos):
+        Xwin = ["X", "X", "X"]
+        Owin = ["O", "O", "O"]
+        for combination in winningCombos:
+            checkWin = [board[i] for i in combination]
+            if checkWin==Xwin:
+                winner = "X"
+                break
+            elif checkWin==Owin:
+                winner = "O"
+                break
+            else:
+                if "" in board:
+                    winner = 0
+                else:
+                    winner = "Draw"
+        return winner
+
+    def changePlayer(current, next):
+        global currPlayer, nextPlayer
+
+        temp = current
+        current = next
+        next = temp
+
+        currPlayer = current
+        nextPlayer = next
+
+
+    def unbindAll():
+        document["C0"].unbind("click", marker_cell0)
+        document["C1"].unbind("click", marker_cell1)
+        document["C2"].unbind("click", marker_cell2)
+        document["C3"].unbind("click", marker_cell3)
+        document["C4"].unbind("click", marker_cell4)
+        document["C5"].unbind("click", marker_cell5)
+        document["C6"].unbind("click", marker_cell6)
+        document["C7"].unbind("click", marker_cell7)
+        document["C8"].unbind("click", marker_cell8)
+
+    def newGame(event):
+        global currPlayer
+        global nextPlayer
+
+        currPlayer = "X"
+        nextPlayer = "O"
+        document["C0"].textContent = ""
+        document["C1"].textContent = ""
+        document["C2"].textContent = ""
+        document["C3"].textContent = ""
+        document["C4"].textContent = ""
+        document["C5"].textContent = ""
+        document["C6"].textContent = ""
+        document["C7"].textContent = ""
+        document["C8"].textContent = ""
+        document["game-status"].textContent = ""
+        bindAll()
+
+    def playGame():
+        board = getBoard()
+        winner = checkWinner(board, winningPlays)
+        if winner!=0:
+            if winner!="Draw":
+                msg = "Player %s wins!" % winner
+            elif winner=="Draw":
+                msg = "Draw!"
+
+            unbindAll()
+            document["game-status"].textContent = msg
+
+        changePlayer(currPlayer, nextPlayer)
+
+    def bindAll():
+        document["C0"].bind("click", marker_cell0)
+        document["C1"].bind("click", marker_cell1)
+        document["C2"].bind("click", marker_cell2)
+        document["C3"].bind("click", marker_cell3)
+        document["C4"].bind("click", marker_cell4)
+        document["C5"].bind("click", marker_cell5)
+        document["C6"].bind("click", marker_cell6)
+        document["C7"].bind("click", marker_cell7)
+        document["C8"].bind("click", marker_cell8)
+
     bindAll()
-
-def playGame():
-    board = getBoard()
-    winner = checkWinner(board, winningPlays)
-    if winner!=0:
-        unbindAll()
-        msg = "Player %s wins!" % winner
-        document["game-status"].textContent = msg
-
-    changePlayer(currPlayer, nextPlayer)
-
-def bindAll():
-    document["C0"].bind("click", marker_cell0)
-    document["C1"].bind("click", marker_cell1)
-    document["C2"].bind("click", marker_cell2)
-    document["C3"].bind("click", marker_cell3)
-    document["C4"].bind("click", marker_cell4)
-    document["C5"].bind("click", marker_cell5)
-    document["C6"].bind("click", marker_cell6)
-    document["C7"].bind("click", marker_cell7)
-    document["C8"].bind("click", marker_cell8)
+    document["btnNewGame"].bind("click", newGame)
 
 
-bindAll()
-document["btnNewGame"].bind("click", newGame)
-
-</script>
+    </script>
 </body>
 </html>

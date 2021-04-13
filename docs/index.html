@@ -114,50 +114,37 @@
     ]
 
 
-    def marker_cell0(event):
-        document["C0"].textContent = currPlayer
+    def updateCell(cell_ID):
+        document[cell_ID].textContent = currPlayer
+        document[cell_ID].unbind("click", eval("marker_cell" + cell_ID[1]))
         playGame()
-        document["C0"].unbind("click", marker_cell0)
+
+    def marker_cell0(event):
+        updateCell("C0")
 
     def marker_cell1(event):
-        document["C1"].textContent = currPlayer
-        playGame()
-        document["C1"].unbind("click", marker_cell1)
+        updateCell("C1")
 
     def marker_cell2(event):
-        document["C2"].textContent = currPlayer
-        playGame()
-        document["C2"].unbind("click", marker_cell2)
+        updateCell("C2")
 
     def marker_cell3(event):
-        document["C3"].textContent = currPlayer
-        playGame()
-        document["C3"].unbind("click", marker_cell3)
+        updateCell("C3")
 
     def marker_cell4(event):
-        document["C4"].textContent = currPlayer
-        playGame()
-        document["C4"].unbind("click", marker_cell4)
+        updateCell("C4")
 
     def marker_cell5(event):
-        document["C5"].textContent = currPlayer
-        playGame()
-        document["C5"].unbind("click", marker_cell5)
+        updateCell("C5")
 
     def marker_cell6(event):
-        document["C6"].textContent = currPlayer
-        playGame()
-        document["C6"].unbind("click", marker_cell6)
+        updateCell("C6")
 
     def marker_cell7(event):
-        document["C7"].textContent = currPlayer
-        playGame()
-        document["C7"].unbind("click", marker_cell7)
+        updateCell("C7")
 
     def marker_cell8(event):
-        document["C8"].textContent = currPlayer
-        playGame()
-        document["C8"].unbind("click", marker_cell8)
+        updateCell("C8")
 
     def getBoard():
         board = [
@@ -215,17 +202,6 @@
         nextPlayer = next
 
 
-    def unbindAll():
-        document["C0"].unbind("click", marker_cell0)
-        document["C1"].unbind("click", marker_cell1)
-        document["C2"].unbind("click", marker_cell2)
-        document["C3"].unbind("click", marker_cell3)
-        document["C4"].unbind("click", marker_cell4)
-        document["C5"].unbind("click", marker_cell5)
-        document["C6"].unbind("click", marker_cell6)
-        document["C7"].unbind("click", marker_cell7)
-        document["C8"].unbind("click", marker_cell8)
-
     def newGame(event):
         global currPlayer
         global nextPlayer
@@ -268,6 +244,17 @@
         document["C6"].bind("click", marker_cell6)
         document["C7"].bind("click", marker_cell7)
         document["C8"].bind("click", marker_cell8)
+
+    def unbindAll():
+        document["C0"].unbind("click", marker_cell0)
+        document["C1"].unbind("click", marker_cell1)
+        document["C2"].unbind("click", marker_cell2)
+        document["C3"].unbind("click", marker_cell3)
+        document["C4"].unbind("click", marker_cell4)
+        document["C5"].unbind("click", marker_cell5)
+        document["C6"].unbind("click", marker_cell6)
+        document["C7"].unbind("click", marker_cell7)
+        document["C8"].unbind("click", marker_cell8)
 
     bindAll()
     document["btnNewGame"].bind("click", newGame)

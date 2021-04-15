@@ -42,16 +42,14 @@ class newGame():
         self.checkWinner()
 
         # Update player turn message
-        if self.winner=="none":
-            document["game-status"].textContent = "Player %s to move" % self.nextPlayer[1]
+        self.player_message()
 
         # swap players
         self.change_players()
 
         # Computer move
         if (self.currPlayer[0]=="computer") and (self.winner=="none"):
-            bot_cell = self.get_computer_move()
-            self.player_move(bot_cell)
+            self.move_bot()
 
 
     def selectPlayers(self):
@@ -79,6 +77,15 @@ class newGame():
     def change_players(self):
         self.currPlayer, self.nextPlayer = self.nextPlayer, self.currPlayer
 
+    def player_message(self):
+        if self.winner=="none":
+            document["game-status"].textContent = "Player %s to move" % self.nextPlayer[1]
+            if self.currPlayer[0]=="X":
+                document["Xplayer-underling"].style.display = "block"
+                document["Oplayer-underling"].style.display = "none"
+            else:
+                document["Xplayer-underling"].style.display = "block"
+                document["Oplayer-underling"].style.display = "none"
 
     def checkWinner(self):
         Xwin = ["X", "X", "X"]
@@ -155,7 +162,6 @@ class newGame():
 def event_cell(event):
     selected_cell = event.currentTarget.id
     game.player_move(selected_cell)
-    # document[selected_cell].unbind("click", event_cell)
 
 
 def click_selectPlayers(event):

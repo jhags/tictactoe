@@ -6,7 +6,6 @@ import time
 
 import numpy as np
 import pandas as pd
-from keras.models import load_model
 
 root = os.path.abspath(os.path.join(__file__, "../.."))
 sys.path.append(root)

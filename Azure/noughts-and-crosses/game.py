@@ -4,10 +4,9 @@ import random
 
 import numpy as np
 
-s = '0123'
-[c for c in s]
+
 def select_move(board, player_turn, difficulty):
-    """[summary]
+    """Select the best move to make
 
     Args:
         board (str): string of 9 characters representing the current board state e.g. 012012012 where 0 are blank cells, 1 is X and 2 is O

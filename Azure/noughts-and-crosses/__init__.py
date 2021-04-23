@@ -1,6 +1,7 @@
 import logging
 import json
 import azure.functions as func
+import time
 
 from . import game
 
@@ -11,6 +12,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     board = req.params.get('board')
     player_turn = req.params.get('player_turn')
     difficulty = req.params.get('difficulty')
+    delay = req.params.get('delay') # milliseconds
 
     if not player_turn:
         player_turn = 'X'
@@ -28,6 +30,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         },
         'selected_move': selected_move
     }
+
+    if delay:
+        time.sleep(int(delay)/1000)
 
     return func.HttpResponse(
         body=json.dumps(response),

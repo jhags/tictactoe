@@ -1,6 +1,7 @@
 
-from browser import document, window, alert
-
+from browser import document, window, alert, ajax, timer
+import json
+import urllib.request
 
 class newGame():
 
@@ -33,7 +34,7 @@ class newGame():
         self.board[cell_nr] = self.currPlayer[1]
 
         # Print icon to borad
-        document[selected_cell].textContent = self.currPlayer[1]
+        document[selected_cell].text = self.currPlayer[1]
 
         # unbind cell
         document[selected_cell].unbind("click", event_cell)
@@ -77,6 +78,7 @@ class newGame():
     def change_players(self):
         self.currPlayer, self.nextPlayer = self.nextPlayer, self.currPlayer
 
+
     def player_message(self):
         if self.winner=="none":
             document["game-status"].textContent = "Player %s to move" % self.nextPlayer[1]
@@ -84,8 +86,8 @@ class newGame():
                 document["Xplayer-underling"].style.display = "block"
                 document["Oplayer-underling"].style.display = "none"
             else:
-                document["Xplayer-underling"].style.display = "block"
-                document["Oplayer-underling"].style.display = "none"
+                document["Xplayer-underling"].style.display = "none"
+                document["Oplayer-underling"].style.display = "block"
 
     def checkWinner(self):
         Xwin = ["X", "X", "X"]
@@ -119,14 +121,36 @@ class newGame():
             self.unbind_all()
 
 
+    def convert_board(self):
+        hashBoard = ''
+        for cell in self.board:
+            if cell=='X':
+                hashBoard += '1'
+            elif cell=='O':
+                hashBoard += '2'
+            else:
+                hashBoard += '0'
+        return hashBoard
+
+
     def get_computer_move(self):
 
-        availableMoves = []
-        for idx, val in enumerate(self.board):
-            if val=="":
-                availableMoves.append(idx)
+        # availableMoves = []
+        # for idx, val in enumerate(self.board):
+        #     if val=="":
+        #         availableMoves.append(idx)
 
-        selectedMove = availableMoves[0]
+        # selectedMove = availableMoves[0]
+        hashBoard = self.convert_board()
+        delay = '500'
+        url = f'https://noughtsandcrosses.azurewebsites.net/api/noughts-and-crosses?code=zrXeaclgRR2X/1smIaojuDyT8u5hWSwyi4WD0HRyBwmm6/zSOePAaQ==&board={hashBoard}&player_turn={self.currPlayer[1]}&delay={delay}'
+        req = ajax.ajax()
+        req.open("GET", url, False)
+        req.set_header('Access-Control-Allow-Origin', 'https://noughtsandcrosses.azurewebsites.net')
+        req.send()
+        response = json.loads(req.text)
+        selectedMove = response['selected_move']
+
         cell_ID = "C" + str(selectedMove)
         return cell_ID
 

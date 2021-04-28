@@ -17,6 +17,21 @@
             "request": "attach",
             "port": 9091,
             "preLaunchTask": "func: host start"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/docs/test.js"
+        },
+        {
+            "name": "Launch index.html",
+            "type": "chrome",
+            "request": "launch",
+            "file": "${workspaceFolder}/docs/index.html"
         }
     ]
 }

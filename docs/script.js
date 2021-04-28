@@ -149,7 +149,13 @@ function playerMessage() {
 
 function updateBoard(selected_cell) {
     elem = document.getElementById(selected_cell)
+
     elem.innerHTML = Game.currPlayer[1]
+    if (Game.currPlayer[1]=="X") {
+        elem.style.color = "#c8526a"
+    } else {
+        elem.style.color = "#3e8b68"
+    }
     elem.style.pointerEvents = 'none'
 }
 

@@ -1,4 +1,4 @@
-/* Generated on: Wed Apr 14 2021 10:37:32 GMT+0000 (Coordinated Universal Time) */
+/* Generated on: Wed Apr 28 2021 17:26:23 GMT+0000 (Coordinated Universal Time) */
 /* ==========================================================================
    normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css 
    ========================================================================== */
@@ -134,7 +134,7 @@
      border-width: 0.125rem;
      border-color: #88e1f2;
      font-family: 'Varela Round', sans-serif;
-     color: #ff7c7c;
+     color: #c8526a;
      font-size: 120px;
      cursor: default;
    }
@@ -143,15 +143,14 @@
      margin-right: auto;
      margin-left: auto;
      padding: 0.75rem 1.5rem;
-     border-style: solid;
-     border-width: 2px;
-     border-color: #88e1f2;
+     border: 2px solid transparent;
      border-radius: 16px;
-     background-color: transparent;
+     background-color: #f2b145;
      -webkit-transition: border-color 250ms ease;
      transition: border-color 250ms ease;
      color: #21243d;
      font-weight: 700;
+     cursor: pointer;
    }
    
    .buttonstart:hover {
@@ -322,19 +321,35 @@
      text-align: center;
    }
    
-   .playerunderline {
+   .playerunderline-x {
      height: 2px;
      border-style: solid;
      border-width: 3px;
-     border-color: #ff7c7c;
+     border-color: #c8526a;
      border-radius: 10px;
    }
    
    .buttonplayers {
      width: 200px;
      height: auto;
+     margin-right: auto;
+     margin-left: auto;
+     border-style: solid;
+     border-width: 2px;
+     border-color: #f2b145;
      border-radius: 16px;
+     background-color: #fff;
+     color: #21243d;
+     font-weight: 700;
      text-align: center;
+   }
+   
+   .playerunderline-o {
+     height: 2px;
+     border-style: solid;
+     border-width: 3px;
+     border-color: #3e8b68;
+     border-radius: 10px;
    }
    
    @media screen and (max-width: 991px) {

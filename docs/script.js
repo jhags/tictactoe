@@ -129,10 +129,20 @@ function playerMove(selectedCell) {
 
 
 function playerMessage() {
+    elemGameStatus = document.getElementById("game-status")
+    elemXline = document.getElementById("Xplayer-underling")
+    elemOline = document.getElementById("Oplayer-underling")
     if (Game.winner==null) {
-        document.getElementById("game-status").textContent = `Player ${Game.nextPlayer[1]}`
+        elemGameStatus.textContent = `Player ${Game.nextPlayer[1]} to move`
+        if (Game.nextPlayer[1]=="X") {
+            elemXline.style.display = "block"
+            elemOline.style.display = "none"
+        } else {
+            elemXline.style.display = "none"
+            elemOline.style.display = "block"
+        }
     } else {
-        document.getElementById("game-status").textContent = Game.msg
+        elemGameStatus.textContent = Game.msg
     }
 }
 
@@ -177,11 +187,12 @@ function deactivateBoard() {
         elem = document.getElementById(cell)
         elem.style.pointerEvents = 'none'
     }
+    document.getElementById("btnNewGame").innerHTML = "Play again?"
 }
 
 
 function startNewGame() {
-    document.getElementById("btnNewGame").innerHTML = ":)"
+    document.getElementById("btnNewGame").innerHTML = "Restart"
 
     Game = {
         match: selectPlayers(),

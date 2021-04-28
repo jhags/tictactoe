@@ -3,25 +3,24 @@
 
 <head>
     <meta charset="UTF-8">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.0/brython.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.0/brython_stdlib.js"></script>
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript"></script>
     <title>Noughts and Crosses</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body onload="brython()">
+<body>
     <div class="tic-tac-toe">
         <div class="canvas">
             <div id="w-node-e8b55760-ef32-01d7-4e35-fe9276e83341-5cb6bb34" class="game-info">
                 <h2 class="heading">Noughts &amp; Crosses</h2>
                 <p class="paragraph">A game of noughts and crosses powered by machine learning.<br></p>
                 <div class="buttons-wrap"><a id="btnPlayers" data-w-id="09c21871-6e6d-61bc-2738-7d52b38283b4" href="#"
-                        class="buttonplayers w-button">Human vs Computer</a></div>
+                        class="buttonplayers w-button" onclick="clickChooseMatch()">Human vs Computer</a></div>
                 <div class="buttons-wrap"><a id="btnNewGame" data-w-id="ba3b2f03-2aef-875f-8af7-e6fdd940a1f1" href="#"
-                        class="buttonstart w-button">Start New Game</a></div>
+                        class="buttonstart w-button" onclick="startNewGame()">Start New Game</a></div>
                 <p id="game-status" class="gamestatus"></p>
             </div>
             <div id="w-node-_09c0881c-d6b5-ccd2-1235-c168fc3bda72-5cb6bb34" class="game-wrap">
@@ -36,15 +35,15 @@
                     </div>
                 </div>
                 <div class="game">
-                    <div id="C0" class="cell"></div>
-                    <div id="C1" class="cell"></div>
-                    <div id="C2" class="cell"></div>
-                    <div id="C3" class="cell"></div>
-                    <div id="C4" class="cell"></div>
-                    <div id="C5" class="cell"></div>
-                    <div id="C6" class="cell"></div>
-                    <div id="C7" class="cell"></div>
-                    <div id="C8" class="cell"></div>
+                    <div id="C0" class="cell" onClick="playerMove(this.id)"></div>
+                    <div id="C1" class="cell" onClick="playerMove(this.id)"></div>
+                    <div id="C2" class="cell" onClick="playerMove(this.id)"></div>
+                    <div id="C3" class="cell" onClick="playerMove(this.id)"></div>
+                    <div id="C4" class="cell" onClick="playerMove(this.id)"></div>
+                    <div id="C5" class="cell" onClick="playerMove(this.id)"></div>
+                    <div id="C6" class="cell" onClick="playerMove(this.id)"></div>
+                    <div id="C7" class="cell" onClick="playerMove(this.id)"></div>
+                    <div id="C8" class="cell" onClick="playerMove(this.id)"></div>
                     <div class="v-line _2"></div>
                     <div class="h-line _2"></div>
                     <div class="h-line _1"></div>
@@ -57,7 +56,7 @@
         </div>
     </div>
 
-    <script type="text/python" src="main.py"></script>
+    <script type="text/javascript" src="script.js"></script>
 </body>
 
 </html>

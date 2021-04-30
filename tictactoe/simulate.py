@@ -14,7 +14,7 @@ sys.path.append(root)
 from tictactoe import BotPlayer, Game, HumanPlayer, RandomPlayer
 
 
-def simulate(lineup, games):
+def simulate(lineup, games, print_outcomes=True):
     winlog = []
 
     P1 = lineup[0]
@@ -31,7 +31,10 @@ def simulate(lineup, games):
     wins = round(100*len(winlog[winlog['winner']==1])/games, 1)
     lost = round(100*len(winlog[winlog['winner']==2])/games, 1)
     draw = round(100*len(winlog[winlog['winner']==0])/games, 1)
-    print('W: {} | D: {} | L: {}'.format(wins, draw, lost))
+    if print_outcomes:
+        print(f'P1 W: {wins} | D: {draw} | L: {lost}')
+
+    return wins, draw, lost
 
 
 if __name__ == "__main__":

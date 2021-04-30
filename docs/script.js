@@ -94,7 +94,7 @@ function convertBoard(iconBoard) {
 
 async function getComputerMove() {
     hashBoard = convertBoard(Game.board)
-    delay = 750
+    delay = 500
     url = `https://noughtsandcrosses.azurewebsites.net/api/noughts-and-crosses?code=zrXeaclgRR2X/1smIaojuDyT8u5hWSwyi4WD0HRyBwmm6/zSOePAaQ==&board=${hashBoard}&player_turn=${Game.currPlayer[1]}&delay=${delay}`
 
     const request = async () => {
@@ -172,6 +172,10 @@ function clickChooseMatch() {
     } else if (btnPlayerText==CvP) {
         elem.innerHTML = PvC
     }
+
+    resetBoard()
+
+    document.getElementById("btnNewGame").innerHTML = "Start New Game"
 }
 
 
@@ -210,6 +214,19 @@ function startNewGame() {
     }
 
     resetBoard()
+
+    elemXline = document.getElementById("Xplayer-underling")
+    elemOline = document.getElementById("Oplayer-underling")
+
+    document.getElementById("game-status").textContent = `Player ${Game.currPlayer[1]} to move`
+    if (Game.currPlayer[1]=="X") {
+        elemXline.style.display = "block"
+        elemOline.style.display = "none"
+    } else {
+        elemXline.style.display = "none"
+        elemOline.style.display = "block"
+    }
+
 
     if ((Game.currPlayer[0]=="computer") && (Game.winner==null)) {
         getComputerMove()

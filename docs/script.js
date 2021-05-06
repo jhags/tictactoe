@@ -173,9 +173,9 @@ function clickChooseMatch() {
         elem.innerHTML = PvC
     }
 
-    resetBoard()
+    startNewGame()
 
-    document.getElementById("btnNewGame").innerHTML = "Start New Game"
+    // document.getElementById("btnNewGame").innerHTML = "Start New Game"
 }
 
 
